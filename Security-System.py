@@ -54,7 +54,16 @@ import pandas as pd
 import joblib
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
+import json
 
+# Cargar configuración desde config.json
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+
+# Acceder a opciones de configuración
+api_key = config.get('api_key', 'tu_clave_de_api')
+debug_mode = config.get('debug_mode', False)
+archivo_log = config.get('archivo_log', 'log.txt')
 
 def get_system_type():
     return platform.system()
