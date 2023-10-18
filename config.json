@@ -1,0 +1,25 @@
+{
+  "virustotal": {
+    "api_key": "tu_clave_de_API_de_VirusTotal",
+    "rate_limit_requests": 4,
+    "rate_limit_period": 60
+  },
+  "smtp": {
+    "server": "smtp.tu_servidor.com",
+    "port": 587,
+    "username": "tu_usuario_de_correo",
+    "password": "tu_contraseña_de_correo",
+    "sender_email": "tucorreo@gmail.com",
+    "recipient_email": "correo_destino@ejemplo.com"
+  },
+  "file_paths": {
+    "input_folder": "/ruta/a/tu/carpeta/entrada",
+    "output_folder": "/ruta/a/tu/carpeta/salida",
+    "log_file": "/ruta/a/tu/archivo_de_bitacora.log"
+  },
+  "notifications": {
+    "enable_email_alerts": true,
+    "enable_slack_alerts": false,
+    "slack_webhook_url": "tu_webhook_de_Slack"
+  }
+}
