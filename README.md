@@ -1,41 +1,27 @@
-Readme
+Security System es una potente herramienta de seguridad diseñada para proteger y supervisar su sistema. Ofrece una amplia gama de funciones para detectar y responder a posibles amenazas a la seguridad, así como para realizar un seguimiento de la actividad de la red y del estado del sistema. Hasta la fecha, hemos resuelto con éxito varios errores, y seguimos comprometidos con el perfeccionamiento de nuestro software. Nos complace anunciar que la próxima actualización está prevista para enero de 2024.
 
-Este proyecto es una colección de utilidades y herramientas para el análisis de seguridad y gestión de recursos en diferentes sistemas operativos.
+## Características Principales
 
-Requisitos previos
-Antes de ejecutar este proyecto, asegúrate de cumplir con los siguientes requisitos:
+- Análisis de archivos en busca de malware y amenazas conocidas utilizando VirusTotal.
+- Monitoreo de la actividad de red y detección de conexiones sospechosas.
+- Supervisión del sistema, incluyendo el uso de recursos y procesos en ejecución.
+- Información sobre la geolocalización de direcciones IP y registros de conexiones.
+- Análisis de archivos y metadatos, incluyendo detección de tipos de archivos y resumen de contenido.
+- Generación de informes y alertas por correo electrónico.
 
-    Python 3.7 o superior
-    Bibliotecas adicionales: pybox, cryptography, exiftool, pyopenssl, smtplib
-    Las dependencias externas necesarias están especificadas en el archivo requirements.txt
+## Requisitos
 
-Instalación
-Sigue estos pasos para instalar el proyecto en tu máquina local:
+Antes de utilizar este programa, asegúrate de que tengas instalados los siguientes requisitos.
 
-    Clona este repositorio en tu máquina local.
-    Accede al directorio del proyecto: cd CodNetstat.py
-    Crea un entorno virtual: python3 -m venv venv.
-    Activa el entorno virtual:
-        En Windows: venv\Scripts\activate.
-        En macOS/Linux: source venv/bin/activate.
-    Instala las dependencias del proyecto: pip install -r requirements.txt.
+- Python 3.x
+- Bibliotecas adicionales, que puedes instalar ejecutando `pip install -r requirements.txt`.
 
-Uso
-Analizar el tráfico de red
-El archivo analyze_network_traffic.py contiene funciones para analizar el tráfico de red. Para ejecutar el análisis, sigue estos pasos:
+## Uso
 
-   Asegúrate de tener privilegios de administrador en tu sistema operativo.
-   Ejecuta el archivo analyze_network_traffic.py:
+- Clona este repositorio en tu sistema.
+- Crea un entorno virtual e instala las dependencias del proyecto.
+- Ejecuta el programa `python Security-System.py`.
 
-    python analyze_network_traffic.py
+## Configuración
 
-Observa los resultados en la consola. El análisis incluye escaneo de firmas, análisis heurístico, análisis de comportamiento en sandbox, análisis de metadatos y detección basada en aprendizaje automático.
-Para utilizar el programa de análisis de archivos, se deben cumplir los requisitos mencionados anteriormente. Luego, se pueden llamar a las funciones según sea necesario, pasando la ruta del archivo a analizar como argumento.
-
-    file_path = '/ruta/al/archivo'
-    result = perform_heuristic_analysis(file_path)
-    print(result)
-
-El programa imprimirá True si se detecta actividad sospechosa en el archivo, y False en caso contrario.
-
-Nota: Tene en cuenta que debes modificar el codigo segun los datos que obtengas y las funciones que deseas utilizar, correspondiente a las variables que estan esperando los datos necesarios para su correcto funcionamiento.
+El archivo config.json se utiliza para configurar opciones y claves de API necesarias para el funcionamiento del programa. Asegúrate de configurar adecuadamente las opciones antes de ejecutar el programa.
