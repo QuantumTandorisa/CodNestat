@@ -1,3 +1,33 @@
+# -*- coding: utf-8 -*-
+'''
+   _____                      _ __             _____            __          
+  / ___/___  _______  _______(_) /___  __     / ___/__  _______/ /____   ____ ___        
+  \__ \/ _ \/ ___/ / / / ___/ / __/ / / /_____\__ \/ / / / ___/ __/ _ \ / __ `__ \            
+ ___/ /  __/ /__/ /_/ / /  / / /_/ /_/ //____/__/ / /_/ (__  ) /_/  __// / / / / /                
+/____/\___/\___/\__,_/_/  /_/\__/\__, /     /____/\__, /____/\__/\___//_/ /_/ /_/          
+                                /____/           /____/                
+'''
+#######################################################
+#    Security-System.py
+#
+# Security System is a powerful security tool designed 
+# to protect and monitor your system. It provides a 
+# wide range of functions to detect and respond to 
+# potential security threats, as well as to track 
+# network activity and system status. To date, we have
+# successfully addressed several bugs, and we remain 
+# committed to perfecting our software. We are excited
+# to announce that the next update is scheduled for 
+# January 2024.
+#
+#
+# 10/18/23 - Changed to Python3 (finally)
+#
+# Author: Facundo Fernandez 
+#
+#
+#######################################################
+
 from multiprocessing import connection
 import os
 import re
@@ -6,23 +36,22 @@ import json
 import smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
-from tkinter.ttk import _Padding
-import psutil
+#import psutil
 import socket
-
+#from tkinter.ttk import _Padding
 import requests
 import geoip2.database
 import hashlib
 import time
 import ssl
 import platform
-import pybox
+#import pybox
 import magic
 import PyPDF2
 from PIL import Image
-import win32api
+#import win32api
 import pandas as pd
-from sklearn.externals import joblib
+import joblib
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 
