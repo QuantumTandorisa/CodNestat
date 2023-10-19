@@ -10,14 +10,14 @@
 #######################################################
 #    Security-System.py
 #
-# Security System is a powerful security tool designed 
-# to protect and monitor your system. It provides a 
-# wide range of functions to detect and respond to 
-# potential security threats, as well as to track 
-# network activity and system status. To date, we have
-# successfully addressed several bugs, and we remain 
-# committed to perfecting our software. We are excited
-# to announce that the next update is scheduled for 
+# Security System is a powerful security tool designed
+# to protect and monitor your system. It offers a wide 
+# range of functions to detect and respond to potential
+# security threats, as well as to track network activity
+# and system status. To date, I have successfully 
+# resolved several bugs, and will continue to work on 
+# constantly improving the software. I am pleased to 
+# announce that the next upgrade is scheduled for 
 # January 2024.
 #
 #
