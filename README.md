@@ -1,4 +1,4 @@
-Security System es una potente herramienta de seguridad diseñada para proteger y supervisar su sistema. Ofrece una amplia gama de funciones para detectar y responder a posibles amenazas a la seguridad, así como para realizar un seguimiento de la actividad de la red y del estado del sistema. Hasta la fecha, hemos resuelto con éxito varios errores, y seguimos comprometidos con el perfeccionamiento de nuestro software. Nos complace anunciar que la próxima actualización está prevista para enero de 2024.
+Security System es una potente herramienta de seguridad diseñada para proteger y supervisar su sistema. Ofrece una amplia gama de funciones para detectar y responder a posibles amenazas a la seguridad, así como para realizar un seguimiento de la actividad de la red y del estado del sistema. Hasta la fecha, he resuelto con éxito varios errores, y continuaré trabajando en la mejora constante del software.  Me complace anunciar que la próxima actualización está prevista para enero de 2024.
 
 ## Características Principales
 
