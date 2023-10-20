@@ -1118,7 +1118,7 @@ def load_configuration(file_path):
     return config
 
 def apply_configuration(config):
-    # Apply the settings to your system or application                            / Aplica la configuración a tu sistema o aplicación
+    # Apply the settings to your system or application / Aplica la configuración a tu sistema o aplicación
     # Example: Assign configuration values ​​to variables or adjust system settings / Ejemplo: asigna los valores de configuración a variables o ajusta la configuración del sistema
     for key, value in config.items():
         # Example: We assume that the configuration keys are global variables and assign the values / Ejemplo: asumimos que las claves de configuración son variables globales y asignamos los valores
