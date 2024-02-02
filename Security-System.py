@@ -18,10 +18,10 @@
 # resolved several bugs, and will continue to work on 
 # constantly improving the software. I am pleased to 
 # announce that the next upgrade is scheduled for 
-# January 2024.
+# may 2024.
 #
 #
-# 10/18/23 - Changed to Python3 (finally)
+# 02/02/24 - Changed to Python3 (finally)
 #
 # Author: Facundo Fernandez 
 #
