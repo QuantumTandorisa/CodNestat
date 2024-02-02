@@ -36,31 +36,31 @@ import json
 import smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
-#import psutil
+import psutil
 import socket
-#from tkinter.ttk import _Padding
+from tkinter.ttk import _Padding
 import requests
 import geoip2.database
 import hashlib
 import time
 import ssl
 import platform
-#import pybox
+import pybox
 import magic
 import PyPDF2
 from PIL import Image
-#import win32api
+import win32api
 import pandas as pd
 import joblib
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 import json
 
-# Cargar configuración desde config.json
+# Load configuration from config.json / Cargar configuración desde config.json
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
-# Acceder a opciones de configuración
+# Access configuration options / Acceder a opciones de configuración
 api_key = config.get('api_key', 'tu_clave_de_api')
 debug_mode = config.get('debug_mode', False)
 archivo_log = config.get('archivo_log', 'log.txt')
@@ -194,10 +194,42 @@ def detect_malware(file_path):
 
     return False
 
-def scan_for_known_signatures(file_path):
+def scan_for_known_signatures(file_path, known_signatures):
+    block_size = 4096  # Block size / Tamaño del bloque
+    with open(file_path, 'rb') as file:
+        file_content = memoryview(file.read())
+        matches = []
+
+        # Search memory buffer for matches / Buscar coincidencias en el búfer de memoria
+        for signature in known_signatures:
+            pattern = signature['pattern']
+            offset = signature['offset']
+            wildcards = signature['wildcards']
+            count = signature['count']
+
+            matches.extend([i for i in range(len(file_content) - len(pattern) + 1) if file_content[i:i + len(pattern)] == pattern])
+            
+            for match_start in matches:
+                start = match_start + offset
+                end = start + len(pattern)
+
+                if all(wc == file_content[start + i] for i, wc in enumerate(wildcards)):
+                    count -= 1
+
+                    if count == 0:
+                        return True
+
+        # If no matches were found in the memory buffer, read the file in blocks. / Si no se encontraron coincidencias en el búfer de memoria, leer el archivo en bloques
+        while True:
+            block = file.read(block_size)
+            if not block:
+                break
+
+            # Process the current block here / Procesar el bloque actual aquí
+
+    return False
+
     # Implement signature scanning using more advanced techniques / Implementa el escaneo de firmas utilizando técnicas más avanzadas
-    # Compare the file with the known signatures / Realiza la comparación del archivo con las firmas conocidas
-    # Returns True if a match is found, False otherwise / Retorna True si se encuentra una coincidencia, False en caso contrario
 
     known_signatures = [
     {
@@ -330,131 +362,140 @@ def scan_for_known_signatures(file_path):
     return False
 
 def perform_heuristic_analysis(file_path):
-    # Implement heuristic analysis to detect suspicious behavior / Implementa el análisis heurístico para detectar comportamientos sospechosos
-    # Look for common malware features in the file / Busca características comunes de malware en el archivo
-    # Returns True if suspicious behavior is found, False otherwise / Retorna True si se encuentran comportamientos sospechosos, False en caso contrario
-
-    # Example of basic heuristic analysis / Ejemplo de análisis heurístico básico
+    # Basic heuristic analysis / Análisis heurístico básico
     suspicious_patterns = [
-    "malware",
-    "evil",
-    "hacker",
-    "eval(",
-    "exec(",
-    "os.system(",
-    "shellcode",
-    "backdoor",
-    "rootkit",
-    "keylogger",
-    "phishing",
-    "ransomware",
-    "spyware",
-    "trojan",
-    "worm",
-    "botnet",
-    "exploit",
-    "virus",
-    "payload",
-    "command injection",
-    "buffer overflow",
-    "SQL injection",
-    "cross-site scripting",
-    "remote code execution",
-    "privilege escalation",
-    "data exfiltration",
-    "credential theft",
-    "DNS hijacking",
-    "ARP spoofing",
-    "network scanning",
-    "suspicious IP",
-    "unusual network traffic",
-    "unauthorized access",
-    "fileless malware",
-    "persistence mechanism",
-    "elevated privileges",
-    "registry modification",
-    "root privilege escalation",
-    "zero-day exploit",
-    "malicious payload",
-    "malicious link",
-    "command and control",
-    "bot herder",
-    "data breach",
-    "exfiltration channel",
-    "stealthy behavior",
-    "anti-analysis techniques",
-    "polymorphic code",
-    "sandbox evasion",
-    "code obfuscation",
-    "file encryption",
-    "browser hijacking",
-    "social engineering",
-    "phishing email",
-    "malvertising",
-    "drive-by download",
-    "man-in-the-middle",
-    "denial of service",
-    "distributed denial-of-service",
-    "brute-force attack",
-    "password cracking",
-    "credential stuffing",
-    "network intrusion",
-    "web application vulnerability",
-    "security misconfiguration",
-    "insecure deserialization",
-    "XML external entity",
-    "unvalidated redirects",
-    "cross-site request forgery",
-    "broken access control",
-    "server-side request forgery",
-    "injection attacks",
-    "untrusted input",
-    "command injection",
-    "code injection",
-    "path traversal",
-    "remote file inclusion",
-    "security bypass",
-    "file upload vulnerability",
-    "code review",
-    "penetration testing",
-    "security assessment",
-    "incident response",
-    "forensic analysis",
-    "security audit",
-    "vulnerability scanning",
-    "network monitoring",
-    "log analysis",
-    "anomaly detection",
-    "security awareness",
-    "two-factor authentication",
-    "encryption algorithms",
-    "secure coding practices",
-    "least privilege",
-    "access control",
-    "firewall",
-    "intrusion detection system",
-    "intrusion prevention system",
-    "virtual private network",
-    "secure sockets layer",
-    "transport layer security",
-    "public key infrastructure",
-    "security information and event management",
-    "data loss prevention",
-    "identity and access management",
-    "security policies",
-    "security standards",
-    "patch management",
-    "secure software development life cycle",
-    "password policy",
-    "network segmentation",
-    "user awareness training"
+    r'\bmalware\b',
+    r'\bevil\b',
+    r'\bhacker\b',
+    r'\beval\s*\(',
+    r'\bexec\s*\(',
+    r'\bos\.system\s*\(',
+    r'\bshellcode\b',
+    r'\bbackdoor\b',
+    r'\brootkit\b',
+    r'\bkeylogger\b',
+    r'\bphishing\b',
+    r'\bransomware\b',
+    r'\bspyware\b',
+    r'\btrojan\b',
+    r'\bworm\b',
+    r'\bbotnet\b',
+    r'\bexploit\b',
+    r'\bvirus\b',
+    r'\bpayload\b',
+    r'\bcommand injection\b',
+    r'\bbuffer overflow\b',
+    r'\bSQL injection\b',
+    r'\bcross-site scripting\b',
+    r'\bremote code execution\b',
+    r'\bprivilege escalation\b',
+    r'\bdata exfiltration\b',
+    r'\bcredential theft\b',
+    r'\bDNS hijacking\b',
+    r'\bARP spoofing\b',
+    r'\bnetwork scanning\b',
+    r'\bsuspicious IP\b',
+    r'\bunusual network traffic\b',
+    r'\bunauthorized access\b',
+    r'\bfileless malware\b',
+    r'\bpersistence mechanism\b',
+    r'\belevated privileges\b',
+    r'\bregistry modification\b',
+    r'\broot privilege escalation\b',
+    r'\bzero-day exploit\b',
+    r'\bmalicious payload\b',
+    r'\bmalicious link\b',
+    r'\bcommand and control\b',
+    r'\bbot herder\b',
+    r'\bdata breach\b',
+    r'\bexfiltration channel\b',
+    r'\bstealthy behavior\b',
+    r'\banti-analysis techniques\b',
+    r'\bpolymorphic code\b',
+    r'\bsandbox evasion\b',
+    r'\bcode obfuscation\b',
+    r'\bfile encryption\b',
+    r'\bbrowser hijacking\b',
+    r'\bsocial engineering\b',
+    r'\bphishing email\b',
+    r'\bmalvertising\b',
+    r'\bdrive-by download\b',
+    r'\bman-in-the-middle\b',
+    r'\bdenial of service\b',
+    r'\bdistributed denial-of-service\b',
+    r'\bbrute-force attack\b',
+    r'\bpassword cracking\b',
+    r'\bcredential stuffing\b',
+    r'\bnetwork intrusion\b',
+    r'\bweb application vulnerability\b',
+    r'\bsecurity misconfiguration\b',
+    r'\binsecure deserialization\b',
+    r'\bXML external entity\b',
+    r'\bunvalidated redirects\b',
+    r'\bcross-site request forgery\b',
+    r'\bbroken access control\b',
+    r'\bserver-side request forgery\b',
+    r'\binjection attacks\b',
+    r'\buntrusted input\b',
+    r'\bcommand injection\b',
+    r'\bcode injection\b',
+    r'\bpath traversal\b',
+    r'\bremote file inclusion\b',
+    r'\bsecurity bypass\b',
+    r'\bfile upload vulnerability\b',
+    r'\bcode review\b',
+    r'\bpenetration testing\b',
+    r'\bsecurity assessment\b',
+    r'\bincident response\b',
+    r'\bforensic analysis\b',
+    r'\bsecurity audit\b',
+    r'\bvulnerability scanning\b',
+    r'\bnetwork monitoring\b',
+    r'\blog analysis\b',
+    r'\banomaly detection\b',
+    r'\bsecurity awareness\b',
+    r'\btwo-factor authentication\b',
+    r'\bencryption algorithms\b',
+    r'\bsecure coding practices\b',
+    r'\bleast privilege\b',
+    r'\baccess control\b',
+    r'\bfirewall\b',
+    r'\bintrusion detection system\b',
+    r'\bintrusion prevention system\b',
+    r'\bvirtual private network\b',
+    r'\bsecure sockets layer\b',
+    r'\btransport layer security\b',
+    r'\bpublic key infrastructure\b',
+    r'\bsecurity information and event management\b',
+    r'\bdata loss prevention\b',
+    r'\bidentity and access management\b',
+    r'\bsecurity policies\b',
+    r'\bsecurity standards\b',
+    r'\bpatch management\b',
+    r'\bsecure software development life cycle\b',
+    r'\bpassword policy\b',
+    r'\bnetwork segmentation\b',
+    r'\buser awareness training\b',
+    r'\bmalicious\b',
+    r'\bexploit\b',
+    r'\battack\b',
+    r'\bsecurity\b',
+    r'\bthreat\b',
+    r'\bvulnerability\b',
+    r'\bcybersecurity\b',
+    r'\bdangerous\b',
+    r'\bsuspicious\b',
+    r'\bintruder\b',
+    r'\bunauthorized\b',
+    r'\brisk\b',
+    r'\bbreach\b'
 ]
 
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
         content = file.read()
 
         for pattern in suspicious_patterns:
-            if pattern in content:
+            if re.search(pattern, content, re.IGNORECASE):
                 return True
 
     return False
